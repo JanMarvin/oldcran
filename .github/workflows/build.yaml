@@ -69,10 +69,11 @@ jobs:
             )
             union(packs, packages)
           }
-          packages <- getPackages(c("readstata13"))
+          packages <- getPackages(c("tidyverse", "tinytex", "data.table", "readxl", "openxlsx"))
           # build packages
           dir.create("rlib")
           dir.create("build")
+          dir.create("check")
           setwd("rlib")
           download.packages(packages,
                             destdir = ".", 
@@ -82,7 +83,7 @@ jobs:
             tfl <- grepl(pkg, tfls)
             if (!isFALSE(any(tfl))) {
               utils::untar(tfls[tfl])
-              # rcmdcheck::rcmdcheck(path = pkg, args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
+              rcmdcheck::rcmdcheck(path = pkg, args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
               devtools::build(pkg = pkg, path = "../build", binary = TRUE)
             }
           }
