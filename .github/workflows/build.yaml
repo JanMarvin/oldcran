@@ -72,6 +72,7 @@ jobs:
           packages <- getPackages(c("readstata13"))
           # build packages
           dir.create("rlib")
+          dir.create("build")
           setwd("rlib")
           download.packages(packages,
                             destdir = ".", 
@@ -82,17 +83,10 @@ jobs:
             if (!isFALSE(any(tfl))) {
               utils::untar(tfls[tfl])
               # rcmdcheck::rcmdcheck(path = pkg, args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
-              devtools::build(pkg = pkg, binary = TRUE)
+              devtools::build(pkg = pkg, path = "../build", binary = TRUE)
             }
           }
         shell: Rscript {0}
-
-      - name: Build binary package
-        if: success() 
-        run: |
-          mkdir -p build
-          mv rlib/*.zip .
-        shell: bash 
 
       - name: Upload build results
         if: success() && runner.os != 'Linux'
