@@ -67,7 +67,7 @@ jobs:
             )
             union(packs, packages)
           }
-          packages <- getPackages(c("tinytex"))
+          packages <- getPackages(c("readstata13"))
           download.packages(packages,
                             destdir = tmp, 
                             type = "source")
