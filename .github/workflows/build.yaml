@@ -74,7 +74,7 @@ jobs:
           dir.create("rlib")
           setwd("rlib")
           download.packages(packages,
-                            destdir = "rlib", 
+                            destdir = ".", 
                             type = "source")
           tfls <- dir(pattern = "*.tar.gz")
           for (pkg in packages) {
