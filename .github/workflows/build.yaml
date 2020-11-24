@@ -79,12 +79,14 @@ jobs:
                             destdir = ".", 
                             type = "source")
           tfls <- dir(pattern = "*.tar.gz")
-          for (pkg in packages) {
-            tfl <- grepl(pkg, tfls)
-            if (!isFALSE(any(tfl))) {
-              utils::untar(tfls[tfl])
+          keep <- charmatch(packages, tfls)
+          pkgs <- packages[!is.na(keep)]
+          for (pkg in pkgs) {
+            tfl <- tfls[charmatch(pkg, tfls)]
+            if (!is.na(tfl)) {
+              utils::untar(tfl)
               # rcmdcheck::rcmdcheck(path = pkg, args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
-              remotes::install_deps(pkgdir = pkg)
+              remotes::install_deps(pkgdir = pkg, build = TRUE)
               devtools::build(pkg = pkg, path = "../build", binary = TRUE)
             }
           }
