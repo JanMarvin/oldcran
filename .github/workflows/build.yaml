@@ -60,7 +60,6 @@ jobs:
         env:
           _R_CHECK_CRAN_INCOMING_: false
         run: |
-          dir.create("rlib")
           getPackages <- function(packs){
             packages <- unlist(
               tools::package_dependencies(packs,
@@ -71,12 +70,13 @@ jobs:
             union(packs, packages)
           }
           packages <- getPackages(c("readstata13"))
+          # build packages
+          dir.create("rlib")
+          setwd("rlib")
           download.packages(packages,
                             destdir = "rlib", 
                             type = "source")
-          setwd("rlib")
           tfls <- dir(pattern = "*.tar.gz")
-          dir.create("pkgs")
           for (pkg in packages) {
             tfl <- grepl(pkg, tfls)
             if (!isFALSE(tfl)) {
@@ -85,7 +85,6 @@ jobs:
               devtools::build(pkg = pkg, binary = TRUE)
             }
           }
-          setwd("..")
         shell: Rscript {0}
 
       - name: Build binary package
