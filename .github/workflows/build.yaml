@@ -47,6 +47,8 @@ jobs:
           remotes::install_cran("devtools")
           remotes::install_cran("testthat")
           remotes::install_cran("testit")
+          # required for tidyverse
+          remotes::install_cran("feather")
         shell: Rscript {0}
 
       - name: Session info
