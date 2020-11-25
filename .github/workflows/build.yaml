@@ -42,13 +42,17 @@ jobs:
       - name: Install dependencies
         run: |
           install.packages('remotes')
-          remotes::install_cran("rcmdcheck")
-          remotes::install_cran("sessioninfo")
-          remotes::install_cran("devtools")
-          remotes::install_cran("testthat")
-          remotes::install_cran("testit")
+          remotes::install_cran("rcmdcheck", build = TRUE)
+          remotes::install_cran("sessioninfo", build = TRUE)
+          remotes::install_cran("devtools", build = TRUE)
+          remotes::install_cran("testthat", build = TRUE)
+          remotes::install_cran("testit", build = TRUE)
           # required for tidyverse
-          remotes::install_cran("feather")
+          remotes::install_cran("covr", build = TRUE)
+          remotes::install_cran("feather", build = TRUE)
+          remotes::install_cran("glue", build = TRUE)
+          remotes::install_cran("knitr", build = TRUE)
+          remotes::install_cran("rmarkdown", build = TRUE)
         shell: Rscript {0}
 
       - name: Session info
