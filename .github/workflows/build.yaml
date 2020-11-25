@@ -83,9 +83,10 @@ jobs:
           pkgs <- packages[!is.na(keep)]
           for (pkg in pkgs) {
             tfl <- tfls[charmatch(pkg, tfls)]
-            if (!is.na(tfl)) {
+            print(tfl) #unsure what is going on
+            if (!is.na(tfl) & !identical(tfl, character(0)) {
               utils::untar(tfl)
-              # rcmdcheck::rcmdcheck(path = pkg, args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
+              rcmdcheck::rcmdcheck(path = pkg, args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "../check")
               remotes::install_deps(pkgdir = pkg, build = TRUE)
               devtools::build(pkg = pkg, path = "../build", binary = TRUE)
             }
@@ -93,7 +94,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Upload build results
-        if: success() && runner.os != 'Linux'
+        if: success()
         uses: actions/upload-artifact@main
         with:
           name: ${{ runner.os }}-r-${{ matrix.config.r }}-pkg
