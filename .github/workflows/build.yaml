@@ -39,6 +39,8 @@ jobs:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
 
+      - uses: r-lib/actions/setup-pandoc@master
+
       - name: Install dependencies
         run: |
           install.packages('remotes')
@@ -90,19 +92,30 @@ jobs:
           for (pkg in pkgs) {
             tfl <- tfls[charmatch(pkg, tfls)]
             if(identical(tfl, character(0))) tfl <- NA
-            print(tfl) #unsure what is going on
+            message(tfl) #unsure what is going on
             if (!is.na(tfl)) {
+              message("untar")
               utils::untar(tfl)
+              message("install_deps")
               remotes::install_deps(pkgdir = pkg, build = TRUE)
-              # rcmdcheck::rcmdcheck(path = pkg, args = c("--no-manual", "--as-cran", "--no-build-vignettes"), error_on = "warning", check_dir = "../check")
+              message("rcmdcheck")
+              rcmdcheck::rcmdcheck(path = pkg, args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "../check")
+              message("build")
               devtools::build(pkg = pkg, path = "../build", binary = TRUE)
             }
           }
         shell: Rscript {0}
 
-      - name: Upload build results
+      - name: Upload binaries
         if: success()
         uses: actions/upload-artifact@main
         with:
           name: ${{ runner.os }}-r-${{ matrix.config.r }}-pkg
           path: build
+
+      - name: Upload sources
+        if: success()
+        uses: actions/upload-artifact@main
+        with:
+          name: ${{ runner.os }}-r-{{ matrix.config.r }}-src
+          path: rlib
