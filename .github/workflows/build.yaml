@@ -44,7 +44,7 @@ jobs:
       - name: Install dependencies
         run: |
           install.packages('remotes')
-          remotes::install_version("drat", version = "0.1.6"
+          remotes::install_version("drat", version = "0.1.6")
           drat::addRepo('oldcran')
           remotes::install_cran("rcmdcheck", build = TRUE)
           remotes::install_cran("sessioninfo", build = TRUE)
