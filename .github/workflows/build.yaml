@@ -61,6 +61,12 @@ jobs:
           remotes::install_cran("rmarkdown", build = TRUE)
           remotes::install_cran("pkgdown", build = TRUE)
           remotes::install_cran("tidytemplae", build = TRUE)
+          # required for data.table
+          remotes::install_cran("bit64", build = TRUE)
+          remotes::install_cran("R.utils", build = TRUE)
+          remotes::install_cran("xts", build = TRUE)
+          remotes::install_cran("nanotime, build = TRUE)
+          remotes::install_cran("zoo", build = TRUE)
         shell: Rscript {0}
 
       - name: Session info
