@@ -84,7 +84,7 @@ jobs:
           for (pkg in pkgs) {
             tfl <- tfls[charmatch(pkg, tfls)]
             print(tfl) #unsure what is going on
-            if (!is.na(tfl) & !identical(tfl, character(0)) {
+            if (!is.na(tfl) & !identical(tfl, character(0))) {
               utils::untar(tfl)
               rcmdcheck::rcmdcheck(path = pkg, args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "../check")
               remotes::install_deps(pkgdir = pkg, build = TRUE)
