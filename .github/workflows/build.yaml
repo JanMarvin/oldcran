@@ -43,7 +43,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          install.packages(c('remotes', 'drat'))
+          install.packages('remotes')
+          remotes::install_version("drat", version = "0.1.6"
           drat::addRepo('oldcran')
           remotes::install_cran("rcmdcheck", build = TRUE)
           remotes::install_cran("sessioninfo", build = TRUE)
@@ -80,7 +81,9 @@ jobs:
             )
             union(packs, packages)
           }
-          packages <- getPackages(c("tidyverse", "tinytex", "data.table", "readxl", "openxlsx"))
+          packages <- getPackages(c("tidyverse", "tinytex", "data.table",
+                                    "readxl", "openxlsx", "roxygen", "devtools", "pkgdown",
+                                    "DT", "bookdown", "grid", "plotly"))
           # build packages
           dir.create("rlib")
           dir.create("build")
