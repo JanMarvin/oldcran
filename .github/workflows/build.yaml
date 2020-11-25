@@ -104,8 +104,13 @@ jobs:
               utils::untar(tfl)
               message("install_deps")
               remotes::install_deps(pkgdir = pkg, build = TRUE)
-              message("rcmdcheck")
-              rcmdcheck::rcmdcheck(path = pkg, args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "../check")
+              if (pkg != "tidyverse") {
+                message("rcmdcheck")
+                rcmdcheck::rcmdcheck(path = pkg,
+                                     args = c("--no-manual", "--as-cran"),
+                                     error_on = "warning",
+                                     check_dir = "../check")
+              }
               message("build")
               devtools::build(pkg = pkg, path = "../build", binary = TRUE)
             }
