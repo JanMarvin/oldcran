@@ -112,7 +112,7 @@ jobs:
               utils::untar(tfl)
               message("install_deps")
               remotes::install_deps(pkgdir = pkg, build = TRUE)
-              if (!(pkg %in% c("tidyverse", "tinytex"))) {
+              if (!(pkg %in% c("tidyverse", "tinytex", "data.table"))) {
                 message("rcmdcheck")
                 rcmdcheck::rcmdcheck(path = pkg,
                                      args = c("--no-manual", "--as-cran"),
