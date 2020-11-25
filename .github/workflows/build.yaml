@@ -90,7 +90,7 @@ jobs:
             union(packs, packages)
           }
           packages <- getPackages(c("tidyverse", "tinytex", "data.table",
-                                    "readxl", "openxlsx", "roxygen", "devtools", "pkgdown",
+                                    "readxl", "openxlsx", "roxygen2", "devtools", "pkgdown",
                                     "DT", "bookdown", "grid", "plotly"))
           # build packages
           dir.create("rlib")
