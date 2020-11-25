@@ -43,7 +43,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          install.packages('remotes')
+          install.packages(c('remotes', 'drat'))
+          drat::addRepo('oldcran')
           remotes::install_cran("rcmdcheck", build = TRUE)
           remotes::install_cran("sessioninfo", build = TRUE)
           remotes::install_cran("devtools", build = TRUE)
@@ -55,6 +56,8 @@ jobs:
           remotes::install_cran("glue", build = TRUE)
           remotes::install_cran("knitr", build = TRUE)
           remotes::install_cran("rmarkdown", build = TRUE)
+          remotes::install_cran("pkgdown", build = TRUE)
+          remotes::install_cran("tidytemplae", build = TRUE)
         shell: Rscript {0}
 
       - name: Session info
