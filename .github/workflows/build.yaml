@@ -94,7 +94,7 @@ jobs:
             if (!is.na(tfl)) {
               utils::untar(tfl)
               remotes::install_deps(pkgdir = pkg, build = TRUE)
-              rcmdcheck::rcmdcheck(path = pkg, args = c("--no-manual", "--as-cran", "--no-build-vignettes"), error_on = "warning", check_dir = "../check")
+              # rcmdcheck::rcmdcheck(path = pkg, args = c("--no-manual", "--as-cran", "--no-build-vignettes"), error_on = "warning", check_dir = "../check")
               devtools::build(pkg = pkg, path = "../build", binary = TRUE)
             }
           }
