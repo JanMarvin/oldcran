@@ -53,6 +53,7 @@ jobs:
           remotes::install_cran("devtools", build = TRUE)
           remotes::install_cran("testthat", build = TRUE)
           remotes::install_cran("testit", build = TRUE)
+          remotes::install_cran("roxygen2", build = TRUE)
           # required for tidyverse
           remotes::install_cran("covr", build = TRUE)
           remotes::install_cran("feather", build = TRUE)
@@ -112,10 +113,10 @@ jobs:
               utils::untar(tfl)
               message("install_deps")
               remotes::install_deps(pkgdir = pkg, build = TRUE)
-              if (!(pkg %in% c("tidyverse", "tinytex", "data.table", "readxl", "openxlsx"))) {
+              if (!(pkg %in% c("tidyverse", "tinytex", "data.table", "readxl", "openxlsx", "roxygen2"))) {
                 message("rcmdcheck")
                 rcmdcheck::rcmdcheck(path = pkg,
-                                     args = c("--no-manual", "--as-cran"),
+                                     args = c("--no-manual", "--as-cran", "--no-build-vignettes"),
                                      error_on = "warning",
                                      check_dir = "../check")
               }
