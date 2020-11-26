@@ -95,6 +95,7 @@ jobs:
                                     "DT", "bookdown", "grid", "plotly"))
           # build packages
           dir.create("rlib")
+          dir.create("extract")
           dir.create("build")
           dir.create("check")
           setwd("rlib")
@@ -110,12 +111,12 @@ jobs:
             message(tfl) #unsure what is going on
             if (!is.na(tfl)) {
               message("untar")
-              utils::untar(tfl)
+              utils::untar(tfl, exdir = "../extract")
               message("install_deps")
-              remotes::install_deps(pkgdir = pkg, build = TRUE)
+              remotes::install_deps(pkgdir = paste0("../extract/", pkg), build = TRUE)
               # if (!(pkg %in% c("tidyverse", "tinytex", "data.table", "readxl", "openxlsx", "roxygen2"))) {
               #   message("rcmdcheck")
-              #   rcmdcheck::rcmdcheck(path = pkg,
+              #   rcmdcheck::rcmdcheck(path = paste0("../extract/", pkg),
               #                        args = c("--no-manual", "--as-cran", "--no-build-vignettes"),
               #                        error_on = "warning",
               #                        check_dir = "../check")
@@ -137,5 +138,5 @@ jobs:
         if: success()
         uses: actions/upload-artifact@main
         with:
-          name: ${{ runner.os }}-r-{{ matrix.config.r }}-src
+          name: ${{ runner.os }}-r-${{ matrix.config.r }}-src
           path: rlib
