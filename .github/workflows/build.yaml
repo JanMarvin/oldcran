@@ -92,7 +92,7 @@ jobs:
           }
           packages <- getPackages(c("tidyverse", "tinytex", "data.table",
                                     "readxl", "openxlsx", "roxygen2", "devtools", "pkgdown",
-                                    "DT", "bookdown", "grid", "plotly"))
+                                    "DT", "bookdown", "grid", "plotly", "renv", "gert", "anytime"))
           # build packages
           dir.create("rlib")
           dir.create("extract")
